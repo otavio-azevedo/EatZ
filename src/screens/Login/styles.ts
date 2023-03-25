@@ -42,12 +42,33 @@ export const LoginButton = styled.TouchableOpacity`
 export const TextLoginButton = styled.Text`
   color: #000000;
   font-size: 18px;
-`;
-
-export const RegisterButton = styled.TouchableOpacity`
-  margintop: 10px;
+  font-weight: bold;
 `;
 
 export const TextRegisterButton = styled.Text`
+  margin-top: 10px;
+  margin-bottom: 10px;
   color: #ffd766;
+`;
+
+export const RegisterContainer = styled.View`
+  margin-top: 25px;
+  margin-bottom: 10px;
+  flex-direction: row;
+`;
+
+export const RegisterContainerIcon = styled.TouchableOpacity`
+  margin: 0 50px;
+  width: 20%;
+  height: 45px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+`;
+
+export const TextIcon = styled.Text`
+  margin-top: 5px;
+  color: #f4e300;
+  font-size: 16px;
+  font-weight: bold;
 `;

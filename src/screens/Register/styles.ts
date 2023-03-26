@@ -23,7 +23,7 @@ export const Input = styled.TextInput`
   padding: 10px;
 `;
 
-export const LoginButton = styled.TouchableOpacity`
+export const RegisterButton = styled.TouchableOpacity`
   background-color: #f4e300;
   width: 80%;
   height: 45px;

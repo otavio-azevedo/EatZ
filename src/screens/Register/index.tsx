@@ -1,41 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image } from 'react-native';
+import { register } from '../../services/authentication';
 import {
   Container,
   Input,
-  LoginButton,
+  RegisterButton,
   TextRegisterButton,
   LogoContainer,
 } from './styles';
 
 export default function RegisterScreen({ navigation, route }) {
   const { role } = route.params;
-  //TODO: setar inputs e fazer requisição
-  console.log(role);
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setPasswordConfirmation] = useState('');
+
+  //TODO: utilizar o context
+
   return (
     <Container>
       <LogoContainer>
         <Image source={require('../../assets/logo.png')} />
       </LogoContainer>
 
-      <Input placeholder='Name' autoCorrect={false} onChange={() => {}} />
-      <Input placeholder='Email' autoCorrect={false} onChange={() => {}} />
+      <Input placeholder='Name' autoCorrect={false} onChangeText={setName} />
+      <Input placeholder='Email' autoCorrect={false} onChangeText={setEmail} />
       <Input
         placeholder='Password'
         autoCorrect={false}
         secureTextEntry={true}
-        onChange={() => {}}
+        onChangeText={setPassword}
       />
       <Input
         placeholder='Confirm Password'
         autoCorrect={false}
         secureTextEntry={true}
-        onChange={() => {}}
+        onChangeText={setPasswordConfirmation}
       />
 
-      <LoginButton>
+      <RegisterButton
+        onPress={() =>
+          register({ name, email, password, confirmPassword, role })
+        }
+      >
         <TextRegisterButton>Criar conta</TextRegisterButton>
-      </LoginButton>
+      </RegisterButton>
     </Container>
   );
 }

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Image, Animated } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Image, Animated, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   AnimatedLoginContainer,
@@ -14,9 +14,15 @@ import {
   TextRegisterButton,
 } from './styles';
 
+import { useAuthentication } from '../../contexts/authentication';
+
 export default function LoginScreen({ navigation }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [offset] = useState(new Animated.ValueXY({ x: 0, y: 95 }));
   const [opacity] = useState(new Animated.Value(0));
+
+  const { signIn } = useAuthentication();
 
   useEffect(() => {
     Animated.parallel([
@@ -34,6 +40,15 @@ export default function LoginScreen({ navigation }) {
     ]).start();
   }, []);
 
+  const signInAsync = useCallback(async () => {
+    const result = await signIn(email, password);
+    if (result) {
+      navigation.navigate('Home');
+    } else {
+      Alert.alert('Usuário ou senha inválidos');
+    }
+  }, [email, password, signIn]);
+
   return (
     <Container>
       <LogoContainer>
@@ -46,11 +61,19 @@ export default function LoginScreen({ navigation }) {
           transform: [{ translateY: offset.y }],
         }}
       >
-        <Input placeholder='Email' autoCorrect={false} onChange={() => {}} />
+        <Input
+          placeholder='Email'
+          autoCorrect={false}
+          onChangeText={setEmail}
+        />
 
-        <Input placeholder='Senha' autoCorrect={false} onChange={() => {}} />
+        <Input
+          placeholder='Senha'
+          autoCorrect={false}
+          onChangeText={setPassword}
+        />
 
-        <LoginButton>
+        <LoginButton onPress={signInAsync}>
           <TextLoginButton>Acessar</TextLoginButton>
         </LoginButton>
 

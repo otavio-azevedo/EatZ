@@ -14,6 +14,7 @@ import jwtDecode, { JwtPayload } from 'jwt-decode';
 export interface UseAuthentication {
   signIn: (email: string, password: string) => Promise<boolean>;
   signOut: () => Promise<void>;
+  authenticated: boolean;
   loading: boolean;
   ready: boolean;
 }
@@ -21,6 +22,9 @@ export interface UseAuthentication {
 const AuthenticationContext = createContext<UseAuthentication>(
   {} as UseAuthentication,
 );
+
+export const useAuthentication = (): UseAuthentication =>
+  useContext(AuthenticationContext);
 
 const isExpired = (jwtToken: string): boolean => {
   const decodedJwt = jwtDecode<JwtPayload>(jwtToken);
@@ -33,22 +37,20 @@ const isExpired = (jwtToken: string): boolean => {
   return compareAsc(today, expirationDate) > 0;
 };
 
-export const useAuthentication = (): UseAuthentication =>
-  useContext(AuthenticationContext);
-
 export function AuthenticationProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [ready, setReady] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
     async function verifyTokenExpiration() {
       const accessToken = await getValue(StorageKey.AccessToken);
-      console.log('useEffect: ' + accessToken);
-      if (!accessToken) return;
-
-      const tokenExpired = isExpired(accessToken);
-
-      if (tokenExpired) clearState();
+      if (!accessToken || isExpired(accessToken)) {
+        clearState();
+        setAuthenticated(false);
+      } else {
+        setAuthenticated(true);
+      }
     }
 
     async function initContext() {
@@ -97,14 +99,6 @@ export function AuthenticationProvider({ children }) {
   );
 
   const signOut = useCallback(async () => {
-    //TODO:
-    // try {
-    //   const refreshTokenValue = await getValue(StorageKey.RefreshToken);
-    //   if (refreshTokenValue) await logout(refreshTokenValue);
-    // } finally {
-    //   clearState();
-    // }
-
     clearState();
   }, []);
 
@@ -118,6 +112,7 @@ export function AuthenticationProvider({ children }) {
         loading,
         signIn,
         signOut,
+        authenticated,
         ready,
       }}
     >

@@ -22,9 +22,13 @@ export default function LoginScreen({ navigation }) {
   const [offset] = useState(new Animated.ValueXY({ x: 0, y: 95 }));
   const [opacity] = useState(new Animated.Value(0));
 
-  const { signIn } = useAuthentication();
+  const { signIn, authenticated } = useAuthentication();
 
   useEffect(() => {
+    if (authenticated) {
+      navigation.navigate('Home');
+    }
+
     Animated.parallel([
       Animated.spring(offset.y, {
         toValue: 0,
@@ -38,7 +42,7 @@ export default function LoginScreen({ navigation }) {
         useNativeDriver: true,
       }),
     ]).start();
-  }, []);
+  }, [authenticated]);
 
   const signInAsync = useCallback(async () => {
     const result = await signIn(email, password);

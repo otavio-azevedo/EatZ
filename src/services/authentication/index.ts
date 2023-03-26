@@ -3,12 +3,12 @@ import {
   AccessTokenResponse,
   LoginRequest,
 } from '../../types';
-import HttpClientInstance from '../@axios';
+import { httpClientAuth, httpClientPublic } from '../@axios';
 
 export async function register(
   request: RegisterRequest,
 ): Promise<AccessTokenResponse> {
-  const response = await HttpClientInstance.post(`/auth/register`, request);
+  const response = await httpClientPublic.post(`/auth/register`, request);
 
   return response.data;
 }
@@ -16,7 +16,13 @@ export async function register(
 export async function login(
   request: LoginRequest,
 ): Promise<AccessTokenResponse> {
-  const response = await HttpClientInstance.post(`/auth/login`, request);
+  const response = await httpClientPublic.post(`/auth/login`, request);
+
+  return response.data;
+}
+
+export async function refresh(): Promise<AccessTokenResponse> {
+  const response = await httpClientAuth.post(`/auth/refresh`);
 
   return response.data;
 }

@@ -2,8 +2,10 @@ import axios from 'axios';
 import { getValue } from '../../storage';
 import { StorageKey } from '../../types';
 
+const defaultUrl = 'https://055f-179-177-215-237.sa.ngrok.io/api';
+
 const httpClientAuth = axios.create({
-  baseURL: 'https://fea9-179-177-212-91.sa.ngrok.io/api',
+  baseURL: defaultUrl,
   timeout: 60000,
   responseType: 'json',
   headers: {
@@ -26,7 +28,7 @@ httpClientAuth.interceptors.request.use(
 );
 
 const httpClientPublic = axios.create({
-  baseURL: 'https://fea9-179-177-212-91.sa.ngrok.io/api',
+  baseURL: defaultUrl,
   timeout: 60000,
   responseType: 'json',
   headers: {

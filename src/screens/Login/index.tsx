@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Image, Animated, Alert } from 'react-native';
+import { Image, Animated, Alert, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   AnimatedLoginContainer,
@@ -21,6 +21,7 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState('');
   const [offset] = useState(new Animated.ValueXY({ x: 0, y: 95 }));
   const [opacity] = useState(new Animated.Value(0));
+  const [isLoading, setIsLoading] = useState(false);
 
   const { signIn, authenticated } = useAuthentication();
 
@@ -45,7 +46,10 @@ export default function LoginScreen({ navigation }) {
   }, [authenticated]);
 
   const signInAsync = useCallback(async () => {
+    setIsLoading(true);
     const result = await signIn(email, password);
+    setIsLoading(false);
+
     if (result) {
       navigation.navigate('Home');
     } else {
@@ -65,6 +69,13 @@ export default function LoginScreen({ navigation }) {
           transform: [{ translateY: offset.y }],
         }}
       >
+        {isLoading && (
+          <ActivityIndicator
+            size='large'
+            color='#BEBEBE'
+            style={{ marginBottom: 25 }}
+          />
+        )}
         <Input
           placeholder='Email'
           autoCorrect={false}

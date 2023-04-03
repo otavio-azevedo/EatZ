@@ -1,6 +1,162 @@
-import React from 'react';
-import { Text } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, Modal, Alert } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
+
+import {
+  requestForegroundPermissionsAsync,
+  getCurrentPositionAsync,
+} from 'expo-location';
+
+import { styles } from './styles';
+import { HomeSearchCityModal } from '../../modals/HomeSearchCityModal';
+import { searchStoresByCity } from '../../services/stores';
+
+interface Region {
+  latitude: number;
+  longitude: number;
+}
+
+const initialRegion = {
+  latitude: -29.6842614,
+  longitude: -51.1346826,
+  latitudeDelta: 0.005,
+  longitudeDelta: 0.005,
+};
 
 export default function HomeScreen() {
-  return <Text>🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧</Text>;
+  const [location, setLocation] = useState<Region | null>(null);
+  const [searchCityModalVisible, setSearchCityModalVisible] = useState(false);
+  const [selectedCity, setSelectedCity] = useState<SearchCityResponse>(null);
+  const [stores, setStores] = useState<SearchStoresByCityResponse[]>([]);
+
+  async function requestLocationPermissions() {
+    const { granted } = await requestForegroundPermissionsAsync();
+
+    if (granted) {
+      const currentLocation = await getCurrentPositionAsync();
+      setLocation({
+        latitude: currentLocation.coords.latitude,
+        longitude: currentLocation.coords.longitude,
+      });
+    }
+  }
+
+  useEffect(() => {
+    requestLocationPermissions();
+  }, []);
+
+  useEffect(() => {
+    if (selectedCity) {
+      searchStoresByCityCallback(selectedCity.cityId);
+      setLocation({
+        latitude: selectedCity.latitude,
+        longitude: selectedCity.longitude,
+      });
+    }
+  }, [selectedCity]);
+
+  const searchStoresByCityCallback = useCallback(
+    async (cityId: number) => {
+      const stores = await searchStoresByCity(cityId);
+      setStores(stores);
+    },
+
+    [selectedCity],
+  );
+
+  return (
+    <View style={styles.container}>
+      <MapView
+        style={styles.map}
+        //initialRegion={initialRegion}
+        // region={{
+        //   latitude: location?.latitude,
+        //   longitude: location?.longitude,
+        //   latitudeDelta: 0.005,
+        //   longitudeDelta: 0.005,
+        // }}
+        initialCamera={{
+          center: {
+            latitude: initialRegion?.latitude,
+            longitude: initialRegion?.longitude,
+          },
+          pitch: 80,
+          heading: 0,
+          // Only on iOS MapKit, in meters. The property is ignored by Google Maps.
+          altitude: 1,
+          // Only when using Google Maps.
+          zoom: 15,
+        }}
+        camera={{
+          center: {
+            latitude: location?.latitude,
+            longitude: location?.longitude,
+          },
+          pitch: 80,
+          heading: 0,
+          // Only on iOS MapKit, in meters. The property is ignored by Google Maps.
+          altitude: 1,
+          // Only when using Google Maps.
+          zoom: 15,
+        }}
+      >
+        {location && (
+          <Marker
+            coordinate={{
+              latitude: location?.latitude,
+              longitude: location?.longitude,
+            }}
+          />
+        )}
+        {stores.map((store) => (
+          <Marker
+            key={store.storeId}
+            coordinate={{
+              latitude: store.latitude,
+              longitude: store.longitude,
+            }}
+          >
+            <CustomMarker />
+          </Marker>
+        ))}
+      </MapView>
+
+      <Modal
+        visible={searchCityModalVisible}
+        transparent={true}
+        onRequestClose={() => setSearchCityModalVisible(false)}
+        animationType='slide'
+      >
+        <HomeSearchCityModal
+          handleClose={() => setSearchCityModalVisible(false)}
+          setSelectedCity={(selectedCity: SearchCityResponse) =>
+            setSelectedCity(selectedCity)
+          }
+        />
+      </Modal>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setSearchCityModalVisible(true)}
+        >
+          <Text style={styles.textButton}>Buscar cidade</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => Alert.alert('Não implementado ainda...')}
+        >
+          <Text style={styles.textButton}>Ir para listagem</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
+
+function CustomMarker() {
+  return (
+    <View style={styles.customMarker}>
+      <Text style={styles.customMarkerText}>E</Text>
+    </View>
+  );
 }

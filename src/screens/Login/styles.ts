@@ -3,26 +3,19 @@ import styled from 'styled-components/native';
 
 export const Container = styled.KeyboardAvoidingView`
   flex: 1;
-  align-items: center;
   justify-content: center;
-  background-color: #000000;
+  align-items: center;
+  margin-top: 75%;
 `;
 
-export const LogoContainer = styled.View`
+export const LoginImageBackground = styled.ImageBackground`
   flex: 1;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const AnimatedLoginContainer = styled(Animated.View)`
-  flex: 1;
-  align-items: center;
-  width: 90%;
+  resize-mode: cover;
 `;
 
 export const Input = styled.TextInput`
   background-color: #e5e4e2;
-  width: 90%;
+  width: 80%;
   margin-bottom: 15px;
   color: #222;
   font-size: 17px;
@@ -31,16 +24,17 @@ export const Input = styled.TextInput`
 `;
 
 export const LoginButton = styled.TouchableOpacity`
-  background-color: #f4e300;
+  background-color: #2e8494;
   width: 90%;
   height: 45px;
   align-items: center;
   justify-content: center;
-  border-radius: 7px;
+  border-radius: 22px;
+  border: 1px solid #7ed957;
 `;
 
 export const TextLoginButton = styled.Text`
-  color: #000000;
+  color: #fff;
   font-size: 18px;
   font-weight: bold;
 `;
@@ -48,12 +42,11 @@ export const TextLoginButton = styled.Text`
 export const TextRegisterButton = styled.Text`
   margin-top: 10px;
   margin-bottom: 10px;
-  color: #ffd766;
+  color: #fff;
 `;
 
 export const RegisterContainer = styled.View`
-  margin-top: 25px;
-  margin-bottom: 10px;
+  margin-top: 10%;
   flex-direction: row;
 `;
 
@@ -68,7 +61,7 @@ export const RegisterContainerIcon = styled.TouchableOpacity`
 
 export const TextIcon = styled.Text`
   margin-top: 5px;
-  color: #f4e300;
+  color: #fff;
   font-size: 16px;
   font-weight: bold;
 `;

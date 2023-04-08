@@ -27,7 +27,7 @@ export default function Routes() {
         <Stack.Screen
           name='Register'
           component={RegisterScreen}
-          options={{ title: 'Cadastro' }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name='Home'

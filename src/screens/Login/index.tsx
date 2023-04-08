@@ -86,6 +86,7 @@ export default function LoginScreen({ navigation }) {
           placeholder='Senha'
           autoCorrect={false}
           onChangeText={setPassword}
+          secureTextEntry={true}
         />
 
         <LoginButton onPress={signInAsync}>

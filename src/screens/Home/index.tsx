@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, Alert } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   requestForegroundPermissionsAsync,
@@ -10,7 +11,6 @@ import {
 import { styles } from './styles';
 import { HomeSearchCityModal } from '../../modals/HomeSearchCityModal';
 import { searchStoresByCity } from '../../services/stores';
-
 interface Region {
   latitude: number;
   longitude: number;
@@ -23,10 +23,17 @@ const initialRegion = {
   longitudeDelta: 0.005,
 };
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   const [location, setLocation] = useState<Region | null>(null);
   const [searchCityModalVisible, setSearchCityModalVisible] = useState(false);
-  const [selectedCity, setSelectedCity] = useState<SearchCityResponse>(null);
+  const [selectedCity, setSelectedCity] = useState<SearchCityResponse>({
+    cityId: 4137,
+    cityName: 'Novo Hamburgo',
+    latitude: initialRegion.latitude,
+    longitude: initialRegion.longitude,
+    stateAcronym: 'RS',
+    countryAcronym: 'BR',
+  });
   const [stores, setStores] = useState<SearchStoresByCityResponse[]>([]);
 
   async function requestLocationPermissions() {
@@ -135,6 +142,21 @@ export default function HomeScreen() {
         />
       </Modal>
 
+      <View
+        style={{
+          borderTopWidth: 1,
+          borderTopColor: '#ccc',
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.5,
+          shadowRadius: 3.84,
+          elevation: 5,
+        }}
+      />
+
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
@@ -144,7 +166,12 @@ export default function HomeScreen() {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => Alert.alert('Não implementado ainda...')}
+          onPress={() =>
+            navigation.navigate('OffersCatalog', {
+              cityId: selectedCity.cityId,
+              cityName: selectedCity.cityName,
+            })
+          }
         >
           <Text style={styles.textButton}>Ir para listagem</Text>
         </TouchableOpacity>

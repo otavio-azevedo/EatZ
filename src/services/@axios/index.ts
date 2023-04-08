@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getValue } from '../../storage';
 import { StorageKey } from '../../types';
 
-const defaultUrl = 'https://055f-179-177-215-237.sa.ngrok.io/api';
+const defaultUrl = 'https://eatz-services.azurewebsites.net/api';
 
 const httpClientAuth = axios.create({
   baseURL: defaultUrl,

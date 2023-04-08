@@ -22,8 +22,9 @@ export const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttonContainer: {
-    marginTop: 10,
-    marginHorizontal: 20,
+    marginTop: '2%',
+    marginBottom: '2%',
+    marginHorizontal: '20%',
   },
   button: {
     backgroundColor: '#2E8494',

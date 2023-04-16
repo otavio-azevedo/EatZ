@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Animated, Alert, ActivityIndicator } from 'react-native';
+import { Alert, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   Container,
@@ -14,6 +14,7 @@ import {
 } from './styles';
 
 import { useAuthentication } from '../../contexts/authentication';
+import { RoleEnum } from '../../types/roles/roleEnum';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -34,7 +35,9 @@ export default function LoginScreen({ navigation }) {
     setIsLoading(false);
 
     if (result) {
+      //TODO: tratar para redirecionar para a tela correta se usuário for empresa
       navigation.navigate('Home');
+      //navigation.navigate('StoreRegister');
     } else {
       Alert.alert('Usuário ou senha inválidos');
     }
@@ -45,7 +48,7 @@ export default function LoginScreen({ navigation }) {
       <Container>
         {isLoading && <ActivityIndicator size='large' color='#BEBEBE' />}
         <Input
-          placeholder='Email'
+          placeholder='E-mail'
           autoCorrect={false}
           onChangeText={setEmail}
         />
@@ -67,7 +70,7 @@ export default function LoginScreen({ navigation }) {
         <RegisterContainer>
           <RegisterContainerIcon
             onPress={() =>
-              navigation.navigate('Register', { role: 'consumer' })
+              navigation.navigate('Register', { role: RoleEnum.Consumer })
             }
           >
             <Icon name='user' size={30} color='#fff' />
@@ -75,7 +78,9 @@ export default function LoginScreen({ navigation }) {
           </RegisterContainerIcon>
 
           <RegisterContainerIcon
-            onPress={() => navigation.navigate('Register', { role: 'company' })}
+            onPress={() =>
+              navigation.navigate('Register', { role: RoleEnum.Company })
+            }
           >
             <Icon name='building' size={28} color='#fff' />
             <TextIcon>Empresa</TextIcon>

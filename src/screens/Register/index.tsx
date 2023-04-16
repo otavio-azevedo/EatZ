@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { ActivityIndicator, Alert } from 'react-native';
 import { register } from '../../services/authentication';
+import { RoleEnum } from '../../types/roles/roleEnum';
 import {
   Container,
   Input,
@@ -30,8 +31,7 @@ export default function RegisterScreen({ navigation, route }) {
     setIsLoading(false);
 
     if (result) {
-      // navigation.navigate('StoreRegister');
-      console.log('navigation.navigate');
+      navigation.navigate(role === RoleEnum.Company ? 'StoreRegister' : 'Home');
     } else {
       Alert.alert('Falha ao criar conta, verifique os dados informados');
     }
@@ -43,7 +43,7 @@ export default function RegisterScreen({ navigation, route }) {
         {isLoading && <ActivityIndicator size='large' color='#BEBEBE' />}
         <Input placeholder='Nome' autoCorrect={false} onChangeText={setName} />
         <Input
-          placeholder='Email'
+          placeholder='E-mail'
           autoCorrect={false}
           onChangeText={setEmail}
         />

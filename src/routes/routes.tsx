@@ -5,6 +5,8 @@ import LoginScreen from '../screens/Login';
 import RegisterScreen from '../screens/Register';
 import HomeScreen from '../screens/Home';
 import OffersCatalogScreen from '../screens/OffersCatalog';
+import StoreRegisterScreen from '../screens/StoreRegister';
+import OfferRegisterScreen from '../screens/OfferRegister';
 
 export default function Routes() {
   const Stack = createNativeStackNavigator();
@@ -29,6 +31,18 @@ export default function Routes() {
           component={RegisterScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name='StoreRegister'
+          component={StoreRegisterScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name='OfferRegister'
+          component={OfferRegisterScreen}
+          options={{ headerShown: false }}
+        />
+
         <Stack.Screen
           name='Home'
           component={HomeScreen}

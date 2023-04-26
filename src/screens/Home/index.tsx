@@ -169,7 +169,6 @@ export default function HomeScreen({ navigation }) {
           onPress={() =>
             navigation.navigate('OffersCatalog', {
               cityId: selectedCity.cityId,
-              cityName: selectedCity.cityName,
             })
           }
         >

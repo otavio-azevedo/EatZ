@@ -6,7 +6,7 @@ import {
   useState,
 } from 'react';
 import { login } from '../../services/authentication';
-import { clear, getObject, getValue, saveValue } from '../../storage';
+import { clear, getValue, saveValue } from '../../storage';
 import { AccessTokenResponse, StorageKey } from '../../types';
 import { fromUnixTime, compareAsc } from 'date-fns';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
@@ -14,6 +14,7 @@ import jwtDecode, { JwtPayload } from 'jwt-decode';
 export interface UseAuthentication {
   signIn: (email: string, password: string) => Promise<boolean>;
   signOut: () => Promise<void>;
+  handleTokenResponse: (tokenResponse: AccessTokenResponse) => Promise<boolean>;
   authenticated: boolean;
   loading: boolean;
   ready: boolean;
@@ -112,6 +113,7 @@ export function AuthenticationProvider({ children }) {
         loading,
         signIn,
         signOut,
+        handleTokenResponse,
         authenticated,
         ready,
       }}

@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { ActivityIndicator, Alert } from 'react-native';
+import { useAuthentication } from '../../contexts/authentication';
 import { register } from '../../services/authentication';
 import { RoleEnum } from '../../types/roles/roleEnum';
 import {
@@ -13,6 +14,7 @@ import {
 export default function RegisterScreen({ navigation, route }) {
   const { role } = route.params;
 
+  const { handleTokenResponse } = useAuthentication();
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -21,21 +23,23 @@ export default function RegisterScreen({ navigation, route }) {
 
   const registerAsync = useCallback(async () => {
     setIsLoading(true);
-    const result = await register({
+    const registerResult = await register({
       name,
       email,
       password,
       confirmPassword,
       role,
     });
+
+    const signInResult = await handleTokenResponse(registerResult);
     setIsLoading(false);
 
-    if (result) {
+    if (registerResult && signInResult) {
       navigation.navigate(role === RoleEnum.Company ? 'StoreRegister' : 'Home');
     } else {
       Alert.alert('Falha ao criar conta, verifique os dados informados');
     }
-  }, [name, email, password, confirmPassword, register]);
+  }, [name, email, password, confirmPassword, register, handleTokenResponse]);
 
   return (
     <LoginImageBackground source={require('../../assets/login.png')}>

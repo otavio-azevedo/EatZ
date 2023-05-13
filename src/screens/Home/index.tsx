@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Modal, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { useNavigation } from '@react-navigation/native';
 
 import {
   requestForegroundPermissionsAsync,

@@ -65,7 +65,6 @@ export default function StoreRegisterScreen({ navigation }) {
     };
 
     const storeId = await createStore(createStoreRequest);
-    console.log(storeId);
     setIsLoading(false);
 
     if (storeId) navigation.navigate('OfferRegister', { storeId: storeId });

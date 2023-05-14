@@ -40,7 +40,7 @@ export default function Routes() {
         <Stack.Screen
           name='OfferRegister'
           component={OfferRegisterScreen}
-          options={{ headerShown: false }}
+          options={{ title: 'Gestão de Ofertas', headerShown: true }}
         />
 
         <Stack.Screen

@@ -20,28 +20,22 @@ export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  const { signIn, authenticated } = useAuthentication();
+  const { signIn, authenticated, userRole } = useAuthentication();
 
   useEffect(() => {
     if (authenticated) {
-      navigation.navigate('Home');
+      navigation.navigate(
+        userRole == RoleEnum.Consumer ? 'Home' : 'OfferRegister',
+      );
     }
-  }, [authenticated]);
+  }, [authenticated, userRole]);
 
-  const signInAsync = useCallback(async () => {
+  const signInAsync = async () => {
     setIsLoading(true);
     const result = await signIn(email, password);
     setIsLoading(false);
-
-    if (result) {
-      //TODO: tratar para redirecionar para a tela correta se usuário for empresa
-      navigation.navigate('Home');
-      //navigation.navigate('StoreRegister');
-    } else {
-      Alert.alert('Usuário ou senha inválidos');
-    }
-  }, [email, password, signIn]);
+    if (!result) Alert.alert('Usuário ou senha inválidos');
+  };
 
   return (
     <LoginImageBackground source={require('../../assets/login.png')}>
@@ -50,16 +44,18 @@ export default function LoginScreen({ navigation }) {
         <Input
           placeholder='E-mail'
           autoCorrect={false}
+          value={email}
           onChangeText={setEmail}
         />
         <Input
           placeholder='Senha'
           autoCorrect={false}
+          value={password}
           onChangeText={setPassword}
           secureTextEntry={true}
         />
 
-        <LoginButton onPress={signInAsync}>
+        <LoginButton onPress={() => signInAsync()}>
           <TextLoginButton>Acessar</TextLoginButton>
         </LoginButton>
 

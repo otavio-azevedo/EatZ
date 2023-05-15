@@ -1,4 +1,4 @@
 export enum RoleEnum {
-  Company = 'company',
-  Consumer = 'consumer',
+  Company = 'Company',
+  Consumer = 'Consumer',
 }

@@ -21,7 +21,6 @@ export async function searchOffersByStore(
 export async function createOffer(
   request: CreateOfferRequest,
 ): Promise<string> {
-  console.log(request);
   const response = await httpClientAuth.post(`/offers`, request);
   return response.data;
 }

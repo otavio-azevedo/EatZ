@@ -4,6 +4,7 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  Modal,
 } from 'react-native';
 import {
   CardContainer,
@@ -15,10 +16,15 @@ import {
   CardTextPickUpDate,
   CardTextStoreName,
   Container,
+  CardReviewContainer,
+  ReviewRateText,
+  CardReviewStarContainer,
 } from './styles';
 
 import { format, parseISO } from 'date-fns';
 import { searchOffersByCity } from '../../services/offers';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { CreateOrderModal } from '../../modals/CreateOrderModal';
 
 export default function OffersCatalogScreen({ navigation, route }) {
   const { cityId } = route.params;
@@ -27,19 +33,29 @@ export default function OffersCatalogScreen({ navigation, route }) {
     SearchOffersByCityResponse[]
   >([]);
 
+  const [createOrderModalVisible, setCreateOrderModalVisible] = useState(false);
+  const [selectedOffer, setSelectedOffer] = useState(null);
+  const [refetchOffers, setRefetchOffers] = useState(false);
+
   useEffect(() => {
     searchOffersByCityCallback(cityId);
     setIsLoading(false);
   }, [cityId]);
 
   const searchOffersByCityCallback = useCallback(
-    async (cityId: number) => {
-      const offers = await searchOffersByCity(cityId);
-      setSearchResult(offers);
-    },
-
+    async (cityId: number) => searchOffersByCityAsync(cityId),
     [cityId],
   );
+
+  const searchOffersByCityAsync = async (cityId: number) => {
+    const offers = await searchOffersByCity(cityId);
+    setSearchResult(offers);
+  };
+
+  function handleCreateOrderModal(item) {
+    setSelectedOffer(item);
+    setCreateOrderModalVisible(true);
+  }
 
   return (
     <Container>
@@ -53,9 +69,7 @@ export default function OffersCatalogScreen({ navigation, route }) {
       <FlatList
         data={searchOffersResult}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => alert('Ir para página de detalhes da oferta')}
-          >
+          <TouchableOpacity onPress={() => handleCreateOrderModal(item)}>
             <CardContainer>
               <CardTitleContainer>
                 <Image
@@ -74,12 +88,19 @@ export default function OffersCatalogScreen({ navigation, route }) {
               </CardTitleContainer>
 
               <CardTextOfferTitle>
-                {item.quantity}x - {MapTaste(item.taste)}
+                {item.quantity}x Kit(s) {MapTaste(item.taste)}(s)
               </CardTextOfferTitle>
 
               <CardTextPickUpDate>
-                Retirada até {format(parseISO(item.pickUpDate), 'dd/MM HH:mm')}
+                Retirada até {format(parseISO(item.expirationDate), 'dd/MM')}
               </CardTextPickUpDate>
+
+              <CardReviewContainer>
+                <ReviewRateText>{item.storeAverageRating}</ReviewRateText>
+              </CardReviewContainer>
+              <CardReviewStarContainer>
+                <Icon name='star' size={16} color='gold' />
+              </CardReviewStarContainer>
 
               <CardPriceContainer>
                 <CardTextGrossUnitPrice>
@@ -94,6 +115,23 @@ export default function OffersCatalogScreen({ navigation, route }) {
         )}
         keyExtractor={(item) => item.offerId.toString()}
       />
+
+      {selectedOffer && (
+        <Modal
+          visible={createOrderModalVisible}
+          transparent={false}
+          onRequestClose={() => setCreateOrderModalVisible(false)}
+        >
+          <CreateOrderModal
+            setRefetchOffers={(value) => setRefetchOffers(value)}
+            handleClose={() => {
+              setCreateOrderModalVisible(false);
+              if (refetchOffers) searchOffersByCityAsync(cityId);
+            }}
+            offer={selectedOffer}
+          />
+        </Modal>
+      )}
     </Container>
   );
 }

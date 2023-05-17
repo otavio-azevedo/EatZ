@@ -39,7 +39,7 @@ export const CardTextPickUpDate = styled.Text`
   font-size: 14px;
   position: absolute;
   bottom: 0;
-  left: 30%;
+  left: 50%;
   margin-bottom: 0.5%;
 `;
 
@@ -48,15 +48,34 @@ export const CardTextOfferTitle = styled.Text`
   font-style: italic;
   position: absolute;
   bottom: 0;
-  left: 2%;
+  left: 12%;
   margin-bottom: 0.5%;
+`;
+
+export const CardReviewStarContainer = styled.View`
+  position: absolute;
+  right: 2%;
+  margin-top: 3%;
+`;
+
+export const CardReviewContainer = styled.View`
+  position: absolute;
+  right: 2%;
+  margin-top: 2%;
+`;
+
+export const ReviewRateText = styled.Text`
+  color: gold;
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 5%;
 `;
 
 export const CardPriceContainer = styled.View`
   position: absolute;
   bottom: 0;
   right: 2%;
-  margin-bottom: 1.5%;
+  margin-bottom: 1%;
 `;
 export const CardTextGrossUnitPrice = styled.Text`
   font-size: 14px;

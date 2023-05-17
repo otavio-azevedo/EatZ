@@ -55,7 +55,6 @@ export default function OfferRegisterScreen({ navigation, route }) {
   );
 
   const handleDeleteOffer = async (offerId) => {
-    console.log(offerId);
     await deleteOfferById(offerId);
     const offers = await searchOffersByStore(storeId);
     setSearchResult(offers);

@@ -11,6 +11,7 @@ import { AccessTokenResponse, StorageKey } from '../../types';
 import { fromUnixTime, compareAsc } from 'date-fns';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { RoleEnum } from '../../types/roles/roleEnum';
+import { AccessTokenPayload } from '../../types/authentication/jwt/accessTokenPayload';
 
 export interface UseAuthentication {
   signIn: (email: string, password: string) => Promise<boolean>;
@@ -51,7 +52,7 @@ export function AuthenticationProvider({ children }) {
       if (!authenticated) return;
 
       const accessToken = await getValue(StorageKey.AccessToken);
-      const decodedJwt = jwtDecode<JwtPayload>(accessToken);
+      const decodedJwt = jwtDecode<AccessTokenPayload>(accessToken);
 
       if (!accessToken || isExpired(decodedJwt)) {
         clearState();
@@ -80,7 +81,7 @@ export function AuthenticationProvider({ children }) {
 
     await saveState(response.accessToken);
     const accessToken = await getValue(StorageKey.AccessToken);
-    const decodedJwt = jwtDecode<JwtPayload>(accessToken);
+    const decodedJwt = jwtDecode<AccessTokenPayload>(accessToken);
     setUserRole(decodedJwt.roles);
     setUserId(decodedJwt.user_id);
     setAuthenticated(true);

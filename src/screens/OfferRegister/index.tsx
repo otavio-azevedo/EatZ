@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ActivityIndicator, FlatList, Modal, ScrollView } from 'react-native';
+import { ActivityIndicator, FlatList, Modal } from 'react-native';
 import {
   OfferContainer,
   OfferTitle,
@@ -18,6 +18,7 @@ import { format, parseISO } from 'date-fns';
 import { useAuthentication } from '../../contexts/authentication';
 import { deleteOfferById, searchOffersByStore } from '../../services/offers';
 import { OfferRegisterModal } from '../../modals/OfferRegisterModal';
+import { getStoreByCurrentUser } from '../../services/stores';
 
 export default function OfferRegisterScreen({ navigation, route }) {
   const [storeId, setStoreId] = useState('');
@@ -30,17 +31,26 @@ export default function OfferRegisterScreen({ navigation, route }) {
     useState(false);
 
   const [newOfferId, setNewOfferId] = useState('');
+  const { userId } = useAuthentication();
 
   useEffect(() => {
-    //TODO: get store by admin id
-    // fluxo para quando usuário PJ loga na aplicação após o primeiro cadastro
-    //const { userId } = useAuthentication();
-    if (storeId == '' && route.params == undefined) {
-      setStoreId('2c5755aa-e9f3-403d-9d0d-c5f793b8f3f6');
+    if (storeId) {
+      return;
+    }
+
+    if (storeId === '') {
+      const getStoreByCurrentUserAsync = async () => {
+        var response = await getStoreByCurrentUser();
+        setStoreId(response.id);
+      };
+
+      getStoreByCurrentUserAsync();
     } else {
       setStoreId(route.params?.storeId);
     }
+  }, []);
 
+  useEffect(() => {
     searchOffersByStoreCallback(storeId);
     setIsLoading(false);
   }, [storeId, newOfferId]);

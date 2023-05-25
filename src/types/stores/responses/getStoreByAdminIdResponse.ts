@@ -1,0 +1,3 @@
+interface GetStoreByAdminIdResponse {
+  id: string;
+}

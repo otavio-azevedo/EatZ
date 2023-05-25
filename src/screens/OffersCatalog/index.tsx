@@ -35,7 +35,7 @@ export default function OffersCatalogScreen({ navigation, route }) {
 
   const [createOrderModalVisible, setCreateOrderModalVisible] = useState(false);
   const [selectedOffer, setSelectedOffer] = useState(null);
-  const [refetchOffers, setRefetchOffers] = useState(false);
+  const [redirectToOrdersPage, setRedirectToOrdersPage] = useState(false);
 
   useEffect(() => {
     searchOffersByCityCallback(cityId);
@@ -123,10 +123,10 @@ export default function OffersCatalogScreen({ navigation, route }) {
           onRequestClose={() => setCreateOrderModalVisible(false)}
         >
           <CreateOrderModal
-            setRefetchOffers={(value) => setRefetchOffers(value)}
+            setRedirectToOrdersPage={(value) => setRedirectToOrdersPage(value)}
             handleClose={() => {
               setCreateOrderModalVisible(false);
-              if (refetchOffers) searchOffersByCityAsync(cityId);
+              if (redirectToOrdersPage) navigation.navigate('MyOrdersScreen');
             }}
             offer={selectedOffer}
           />

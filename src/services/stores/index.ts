@@ -15,3 +15,8 @@ export async function createStore(
   const response = await httpClientAuth.post(`/store/`, request);
   return response.data;
 }
+
+export async function getStoreByCurrentUser(): Promise<GetStoreByAdminIdResponse> {
+  const response = await httpClientAuth.get(`/store/`);
+  return response.data;
+}

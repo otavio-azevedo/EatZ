@@ -18,8 +18,16 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Picker } from '@react-native-picker/picker';
 import { getCitiesByState, getStatesByCountry } from '../../services/location';
 import { createStore } from '../../services/stores';
+import UnderConstruction from '../../components/UnderConstruction';
 
-export default function StoreRegisterScreen({ navigation }) {
+export default function CompanyProfileScreen({
+  navigation,
+  hasStoreRegistered = true,
+}) {
+  if (hasStoreRegistered) {
+    return <UnderConstruction />;
+  }
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [name, setName] = useState('');
@@ -278,8 +286,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: '#fff',
-    marginTop: 20,
-    padding: '8%',
+    padding: '5%',
   },
   divider: {
     borderBottomColor: '#2E8494',

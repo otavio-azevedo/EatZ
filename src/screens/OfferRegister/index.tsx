@@ -15,7 +15,6 @@ import {
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { format, parseISO } from 'date-fns';
-import { useAuthentication } from '../../contexts/authentication';
 import { deleteOfferById, searchOffersByStore } from '../../services/offers';
 import { OfferRegisterModal } from '../../modals/OfferRegisterModal';
 import { getStoreByCurrentUser } from '../../services/stores';
@@ -31,7 +30,6 @@ export default function OfferRegisterScreen({ navigation, route }) {
     useState(false);
 
   const [newOfferId, setNewOfferId] = useState('');
-  const { userId } = useAuthentication();
 
   useEffect(() => {
     if (storeId) {
@@ -40,14 +38,26 @@ export default function OfferRegisterScreen({ navigation, route }) {
 
     if (storeId === '') {
       const getStoreByCurrentUserAsync = async () => {
-        var response = await getStoreByCurrentUser();
-        setStoreId(response.id);
+        try {
+          var response = await getStoreByCurrentUser();
+          setStoreId(response.id);
+        } catch (error) {
+          if (error.response.data[0].message === 'Loja não encontrada.')
+            navigation.navigate('CompanyProfile', {
+              hasStoreRegistered: false,
+            });
+        }
       };
 
       getStoreByCurrentUserAsync();
     } else {
       setStoreId(route.params?.storeId);
     }
+
+    async () => {
+      const offers = await searchOffersByStore(storeId);
+      setSearchResult(offers);
+    };
   }, []);
 
   useEffect(() => {
@@ -61,7 +71,7 @@ export default function OfferRegisterScreen({ navigation, route }) {
       setSearchResult(offers);
     },
 
-    [storeId],
+    [storeId, newOfferId],
   );
 
   const handleDeleteOffer = async (offerId) => {

@@ -35,7 +35,10 @@ export default function RegisterScreen({ navigation, route }) {
     setIsLoading(false);
 
     if (registerResult && signInResult) {
-      navigation.navigate(role === RoleEnum.Company ? 'StoreRegister' : 'Home');
+      navigation.navigate(
+        'Register',
+        role === RoleEnum.Company ? 'StoreRegister' : 'Home',
+      );
     } else {
       Alert.alert('Falha ao criar conta, verifique os dados informados');
     }

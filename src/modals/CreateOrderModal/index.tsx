@@ -29,7 +29,11 @@ import { Picker } from '@react-native-picker/picker';
 import { CreateOrderRequest } from '../../types/orders/requests/createOrderRequest';
 import { createOrder } from '../../services/orders';
 
-export function CreateOrderModal({ handleClose, offer, setRefetchOffers }) {
+export function CreateOrderModal({
+  handleClose,
+  offer,
+  setRedirectToOrdersPage,
+}) {
   const [quantitySelected, setQuantitySelected] = useState(1);
 
   const createOrderAsync = async () => {
@@ -41,9 +45,9 @@ export function CreateOrderModal({ handleClose, offer, setRefetchOffers }) {
     const orderId = await createOrder(order);
 
     if (orderId === null) {
-      setRefetchOffers(false);
+      setRedirectToOrdersPage(false);
     } else {
-      setRefetchOffers(true);
+      setRedirectToOrdersPage(true);
     }
     handleClose();
   };

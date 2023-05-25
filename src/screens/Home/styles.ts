@@ -22,8 +22,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttonContainer: {
-    marginTop: '2%',
-    marginBottom: '2%',
+    marginBottom: '4%',
     marginHorizontal: '20%',
   },
   button: {

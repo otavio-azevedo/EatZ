@@ -100,7 +100,7 @@ export const CardPriceContainer = styled.View`
   position: absolute;
   bottom: 0;
   right: 4%;
-  margin-bottom: 32%;
+  margin-bottom: 34%;
 `;
 export const CardTextGrossUnitPrice = styled.Text`
   font-size: 14px;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ActivityIndicator, FlatList, Modal, ScrollView } from 'react-native';
+import { ActivityIndicator, FlatList, Modal } from 'react-native';
 import {
   OfferContainer,
   OfferTitle,
@@ -146,7 +146,7 @@ export default function OfferRegisterScreen({ navigation, route }) {
               </OfferInfoWrapper>
 
               <IconWrapper onPress={() => handleDeleteOffer(item.id)}>
-                <Icon name='trash' size={30} color='#D11A2A' />
+                <Icon name='trash' size={36} color='#BEBEBE' />
               </IconWrapper>
             </OfferContainer>
           )}

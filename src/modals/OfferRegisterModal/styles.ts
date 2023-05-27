@@ -2,13 +2,17 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   background-color: #eaf2f4;
-  margin-top: 20%;
+  margin-top: 5%;
   margin-left: 1%;
   margin-right: 1%;
-  height: 60%;
   width: 98%;
   border-radius: 20px;
   border: 1px solid #2e8494;
+  padding: 3%;
+`;
+
+export const BackHeaderModal = styled.TouchableOpacity`
+  margin-right: 10%;
 `;
 
 export const ContainerHeader = styled.View`

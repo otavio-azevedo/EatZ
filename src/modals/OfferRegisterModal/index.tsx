@@ -8,6 +8,7 @@ import {
   ContainerButton,
   ButtonText,
   PickerContainer,
+  BackHeaderModal,
 } from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -46,10 +47,13 @@ export function OfferRegisterModal({ handleClose, storeId, setNewOfferId }) {
   };
 
   return (
-    <Container>
-      <KeyboardAvoidingView>
+    <KeyboardAvoidingView>
+      <Container>
         <ScrollView>
           <ContainerHeader>
+            <BackHeaderModal onPress={() => handleClose()}>
+              <Icon name='angle-down' size={30} color='#2E8494' />
+            </BackHeaderModal>
             <ContainerHeaderText>Cadastre a sua oferta</ContainerHeaderText>
           </ContainerHeader>
 
@@ -92,20 +96,18 @@ export function OfferRegisterModal({ handleClose, storeId, setNewOfferId }) {
 
           <ContainerInput>
             <Input
-              placeholder='Valor Unitário Original (R$)'
+              placeholder='Valor Unitário Original (Ex.: R$ 20,00)'
               autoCorrect={false}
               keyboardType='numeric'
-              value={`R$ ${grossUnitPrice}`}
               onChangeText={handleMoneyValueChange(setGrossUnitPrice)}
             />
           </ContainerInput>
 
           <ContainerInput>
             <Input
-              placeholder='Valor Unitário Promocional (R$)'
+              placeholder='Valor Unitário Promocional (Ex.: R$ 10,00)'
               autoCorrect={false}
               keyboardType='numeric'
-              value={`R$ ${netUnitPrice}`}
               onChangeText={handleMoneyValueChange(setNetUnitPrice)}
             />
           </ContainerInput>
@@ -127,7 +129,7 @@ export function OfferRegisterModal({ handleClose, storeId, setNewOfferId }) {
             <Icon name='check' size={24} color='#2E8494' />
           </ContainerButton>
         </ScrollView>
-      </KeyboardAvoidingView>
-    </Container>
+      </Container>
+    </KeyboardAvoidingView>
   );
 }

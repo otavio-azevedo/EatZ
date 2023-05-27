@@ -4,7 +4,8 @@ interface SearchOffersByStoreResponse {
   description: string;
   netUnitPrice: number;
   grossUnitPrice: number;
-  quantity: number;
+  initQuantity: number;
+  quantityAvaible: number;
   taste: string;
   storeAverageRating: number;
   storeNumberOfReviews: number;

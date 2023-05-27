@@ -13,8 +13,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { getOrdersFromCurrentUser } from '../../services/orders';
 import { GetOrdersFromCurrentUserResponse } from '../../types/orders/responses/getOrdersFromCurrentUserResponse';
 import { format, parseISO } from 'date-fns';
+import { formatStatusOrderEnum } from '../../types/orders/enums';
 
-export default function MyOrdersScreen({ route }) {
+export default function ConsumerOrdersScreen({ route }) {
   const [selectedOrder, setSelectedOrder] =
     useState<GetOrdersFromCurrentUserResponse>(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -22,7 +23,6 @@ export default function MyOrdersScreen({ route }) {
     useState<GetOrdersFromCurrentUserResponse[]>(null);
 
   if (route.params?.newOrderId) {
-    console.log('newOrderId', route.params.newOrderId);
     async () => {
       const orders = await getOrdersFromCurrentUser();
       setOrders(orders);
@@ -61,7 +61,9 @@ export default function MyOrdersScreen({ route }) {
               <Text style={styles.orderInfo}>
                 Data: {format(parseISO(item.creationDate), 'dd/MM/yy')}
               </Text>
-              <Text style={styles.orderInfo}>Status: {item.status}</Text>
+              <Text style={styles.orderInfo}>
+                Status: {formatStatusOrderEnum(item.status)}
+              </Text>
             </View>
             <View style={styles.rightContainer}>
               {item.reviewRate === 0 ? (
@@ -136,7 +138,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-end',
     marginRight: 25,
-    marginTop: 40,
+    marginTop: 35,
   },
   orderId: {
     fontSize: 16,
@@ -152,7 +154,6 @@ const styles = StyleSheet.create({
   orderTotal: {
     fontSize: 14,
     fontWeight: 'bold',
-    marginTop: 5,
   },
   reviewRate: {
     fontSize: 14,

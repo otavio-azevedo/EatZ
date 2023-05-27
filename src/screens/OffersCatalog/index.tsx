@@ -37,6 +37,12 @@ export default function OffersCatalogScreen({ navigation, route }) {
   const [selectedOffer, setSelectedOffer] = useState(null);
 
   useEffect(() => {
+    setIsLoading(true);
+    searchOffersByCityAsync(cityId);
+    setIsLoading(false);
+  }, [createOrderModalVisible]);
+
+  useEffect(() => {
     searchOffersByCityCallback(cityId);
     setIsLoading(false);
   }, [cityId]);
@@ -87,7 +93,7 @@ export default function OffersCatalogScreen({ navigation, route }) {
               </CardTitleContainer>
 
               <CardTextOfferTitle>
-                {item.quantity}x Kit(s) {MapTaste(item.taste)}(s)
+                {item.quantityAvaible}x Combo(s) {MapTaste(item.taste)}(s)
               </CardTextOfferTitle>
 
               <CardTextPickUpDate>

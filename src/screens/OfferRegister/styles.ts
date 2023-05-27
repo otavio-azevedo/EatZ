@@ -12,7 +12,7 @@ export const ListOffersContainer = styled.View`
 export const OfferContainer = styled.View`
   background-color: #fff;
   margin-top: 2%;
-  height: 90px;
+  height: 140px;
   margin-horizontal: 10px;
   border-color: #2e8494;
   border-top-width: 1px;
@@ -23,12 +23,18 @@ export const OfferTitle = styled.Text`
   font-size: 16px;
   margin-top: 1%;
   margin-bottom: 0.5%;
+  margin-left: 1%;
   font-weight: bold;
+`;
+
+export const OfferTitleWrapper = styled.View`
+  flex-direction: row;
+  margin: 1%;
 `;
 
 export const OfferInfoWrapper = styled.View`
   flex-direction: row;
-  margin-left: 2%;
+  margin-left: 5%;
 `;
 
 export const OfferLabel = styled.Text`

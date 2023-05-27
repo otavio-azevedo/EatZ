@@ -11,9 +11,10 @@ import { useAuthentication } from '../contexts/authentication';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { RoleEnum } from '../types/roles/roleEnum';
 import ConsumerProfileScreen from '../screens/ConsumerProfile';
-import MyOrdersScreen from '../screens/MyOrders';
+import CustomerOrdersScreen from '../screens/ConsumerOrdersScreen';
 import CompanyProfileScreen from '../screens/CompanyProfile';
 import SignOutHeader from '../components/SignOutHeader';
+import CompanyOrdersScreen from '../screens/CompanyOrdersScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -94,8 +95,8 @@ function ConsumerAppTabRoutes() {
         />
 
         <Tab.Screen
-          name='MyOrdersScreen'
-          component={MyOrdersScreen}
+          name='ConsumerOrdersScreen'
+          component={CustomerOrdersScreen}
           options={{
             title: 'Meus Pedidos',
             headerShown: true,
@@ -162,10 +163,10 @@ function CompanyAppTabRoutes() {
         />
 
         <Tab.Screen
-          name='MyOrdersScreen'
-          component={MyOrdersScreen}
+          name='CompanyOrdersScreen'
+          component={CompanyOrdersScreen}
           options={{
-            title: 'Meus Pedidos',
+            title: 'Pedidos',
             headerShown: true,
             tabBarLabel: 'Pedidos',
             tabBarIcon: ({ focused }) => (

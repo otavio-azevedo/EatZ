@@ -8,7 +8,8 @@ interface SearchOffersByCityResponse {
   description: string;
   netUnitPrice: number;
   grossUnitPrice: number;
-  quantity: number;
+  initQuantity: number;
+  quantityAvaible: number;
   taste: string;
   expirationDate: string;
   pickUpDate: string;

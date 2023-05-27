@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ActivityIndicator, FlatList, Modal } from 'react-native';
+import { ActivityIndicator, FlatList, Modal, ScrollView } from 'react-native';
 import {
   OfferContainer,
   OfferTitle,
@@ -11,6 +11,7 @@ import {
   ListOffersContainer,
   ButtonNewOffer,
   TextNewOffer,
+  OfferTitleWrapper,
 } from './styles';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -88,7 +89,7 @@ export default function OfferRegisterScreen({ navigation, route }) {
 
       <Modal
         visible={registerOfferModalVisible}
-        transparent={true}
+        transparent={false}
         onRequestClose={() => setRegisterOfferModalVisible(false)}
         animationType='slide'
       >
@@ -112,9 +113,20 @@ export default function OfferRegisterScreen({ navigation, route }) {
           data={searchOffersResult}
           renderItem={({ item }) => (
             <OfferContainer>
-              <OfferTitle>
-                {item.quantity}x - {MapTaste(item.taste)}
-              </OfferTitle>
+              <OfferTitleWrapper>
+                <Icon name='tag' size={20} color='#2E8494' />
+                <OfferTitle>Combo {MapTaste(item.taste)}</OfferTitle>
+              </OfferTitleWrapper>
+
+              <OfferInfoWrapper>
+                <OfferLabel>Qtd. Inicial:</OfferLabel>
+                <OfferText>{item.initQuantity}</OfferText>
+              </OfferInfoWrapper>
+
+              <OfferInfoWrapper>
+                <OfferLabel>Qtd. Disponível:</OfferLabel>
+                <OfferText>{item.quantityAvaible}</OfferText>
+              </OfferInfoWrapper>
 
               <OfferInfoWrapper>
                 <OfferLabel>Vencimento:</OfferLabel>

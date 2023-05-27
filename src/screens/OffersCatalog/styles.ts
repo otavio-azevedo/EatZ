@@ -48,7 +48,7 @@ export const CardTextOfferTitle = styled.Text`
   font-style: italic;
   position: absolute;
   bottom: 0;
-  left: 12%;
+  left: 5%;
   margin-bottom: 0.5%;
 `;
 

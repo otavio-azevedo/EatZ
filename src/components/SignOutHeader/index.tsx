@@ -22,9 +22,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     height: 40,
-  },
-  iconContainer: {
-    marginRight: 5,
+    marginRight: 10,
   },
   text: {
     fontSize: 18,

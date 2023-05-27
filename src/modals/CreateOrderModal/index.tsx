@@ -49,11 +49,12 @@ export function CreateOrderModal({ navigation, handleClose, offer }) {
           {
             text: 'OK',
             onPress: () =>
-              navigation.navigate('MyOrdersScreen', { newOrderId: orderId }),
+              navigation.navigate('ConsumerOrdersScreen', {
+                newOrderId: orderId,
+              }),
           },
         ],
       );
-      // navigation.navigate('MyOrdersScreen');
     }
     handleClose();
   };
@@ -61,7 +62,7 @@ export function CreateOrderModal({ navigation, handleClose, offer }) {
   const renderPickerItems = () => {
     const items = [];
 
-    for (let i = 1; i <= offer.quantity; i++) {
+    for (let i = 1; i <= offer.quantityAvaible; i++) {
       items.push(
         <Picker.Item key={i} label={i.toString()} value={i.toString()} />,
       );
@@ -100,7 +101,7 @@ export function CreateOrderModal({ navigation, handleClose, offer }) {
           </CardTitleContainer>
 
           <OfferGeneralInfoText>
-            {offer.quantity}x Kit(s) {MapTaste(offer.taste)}(s)
+            {offer.quantityAvaible}x Combo(s) {MapTaste(offer.taste)}(s)
           </OfferGeneralInfoText>
 
           <OfferGeneralInfoText>

@@ -3,5 +3,5 @@ import { RoleEnum } from '../../roles/roleEnum';
 
 export interface AccessTokenPayload extends JwtPayload {
   user_id: string;
-  roles?: RoleEnum;
+  user_role?: RoleEnum;
 }

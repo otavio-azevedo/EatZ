@@ -24,30 +24,36 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { format, parseISO } from 'date-fns';
 
-import { KeyboardAvoidingView, ScrollView, Image } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, Image, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { CreateOrderRequest } from '../../types/orders/requests/createOrderRequest';
 import { createOrder } from '../../services/orders';
 
-export function CreateOrderModal({
-  handleClose,
-  offer,
-  setRedirectToOrdersPage,
-}) {
+export function CreateOrderModal({ navigation, handleClose, offer }) {
   const [quantitySelected, setQuantitySelected] = useState(1);
 
   const createOrderAsync = async () => {
     const order: CreateOrderRequest = {
       storeId: offer.storeId,
       offerId: offer.offerId,
+      quantity: quantitySelected,
     };
 
     const orderId = await createOrder(order);
 
-    if (orderId === null) {
-      setRedirectToOrdersPage(false);
-    } else {
-      setRedirectToOrdersPage(true);
+    if (orderId !== null) {
+      Alert.alert(
+        'Pedido reservado!',
+        `Informe o Nº ${orderId} ao chegar no estabelecimento.`,
+        [
+          {
+            text: 'OK',
+            onPress: () =>
+              navigation.navigate('MyOrdersScreen', { newOrderId: orderId }),
+          },
+        ],
+      );
+      // navigation.navigate('MyOrdersScreen');
     }
     handleClose();
   };

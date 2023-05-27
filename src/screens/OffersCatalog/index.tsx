@@ -27,7 +27,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { CreateOrderModal } from '../../modals/CreateOrderModal';
 
 export default function OffersCatalogScreen({ navigation, route }) {
-  const { cityId } = route.params;
+  const cityId = route.params?.cityId ?? 4137;
   const [isLoading, setIsLoading] = useState(true);
   const [searchOffersResult, setSearchResult] = useState<
     SearchOffersByCityResponse[]
@@ -35,7 +35,6 @@ export default function OffersCatalogScreen({ navigation, route }) {
 
   const [createOrderModalVisible, setCreateOrderModalVisible] = useState(false);
   const [selectedOffer, setSelectedOffer] = useState(null);
-  const [redirectToOrdersPage, setRedirectToOrdersPage] = useState(false);
 
   useEffect(() => {
     searchOffersByCityCallback(cityId);
@@ -123,10 +122,9 @@ export default function OffersCatalogScreen({ navigation, route }) {
           onRequestClose={() => setCreateOrderModalVisible(false)}
         >
           <CreateOrderModal
-            setRedirectToOrdersPage={(value) => setRedirectToOrdersPage(value)}
+            navigation={navigation}
             handleClose={() => {
               setCreateOrderModalVisible(false);
-              if (redirectToOrdersPage) navigation.navigate('MyOrdersScreen');
             }}
             offer={selectedOffer}
           />

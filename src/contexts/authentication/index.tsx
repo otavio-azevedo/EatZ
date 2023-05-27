@@ -82,7 +82,7 @@ export function AuthenticationProvider({ children }) {
     await saveState(response.accessToken);
     const accessToken = await getValue(StorageKey.AccessToken);
     const decodedJwt = jwtDecode<AccessTokenPayload>(accessToken);
-    setUserRole(decodedJwt.roles);
+    setUserRole(decodedJwt.user_role);
     setUserId(decodedJwt.user_id);
     setAuthenticated(true);
 

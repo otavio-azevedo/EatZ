@@ -20,6 +20,7 @@ import {
   SummaryContainer,
   SummaryTitleText,
   SummaryPaymentInfoText,
+  BackHeaderModal,
 } from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { format, parseISO } from 'date-fns';
@@ -76,6 +77,9 @@ export function CreateOrderModal({ navigation, handleClose, offer }) {
       <KeyboardAvoidingView>
         <ScrollView>
           <ContainerHeader>
+            <BackHeaderModal onPress={() => handleClose()}>
+              <Icon name='angle-down' size={30} color='#2E8494' />
+            </BackHeaderModal>
             <Image
               source={{
                 uri: `data:image/png;base64,${offer.storeLogoImage}`,

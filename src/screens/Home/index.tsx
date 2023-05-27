@@ -10,6 +10,7 @@ import {
 import { styles } from './styles';
 import { HomeSearchCityModal } from '../../modals/HomeSearchCityModal';
 import { searchStoresByCity } from '../../services/stores';
+
 interface Region {
   latitude: number;
   longitude: number;
@@ -164,14 +165,16 @@ export default function HomeScreen({ navigation }) {
           <Text style={styles.textButton}>Buscar cidade</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.button}
+          style={styles.buttonGoList}
           onPress={() =>
             navigation.navigate('OffersCatalog', {
               cityId: selectedCity.cityId,
             })
           }
         >
-          <Text style={styles.textButton}>Ir para listagem</Text>
+          <Text style={styles.textButtonGoList}>
+            Ir para listagem de ofertas!
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   Image,
   Modal,
+  View,
+  Text,
 } from 'react-native';
 import {
   CardContainer,
@@ -73,51 +75,7 @@ export default function OffersCatalogScreen({ navigation, route }) {
       )}
       <FlatList
         data={searchOffersResult}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => handleCreateOrderModal(item)}>
-            <CardContainer>
-              <CardTitleContainer>
-                <Image
-                  source={{
-                    uri: `data:image/png;base64,${item.storeLogoImage}`,
-                  }}
-                  style={{
-                    marginLeft: 5,
-                    marginTop: 5,
-                    width: 50,
-                    height: 50,
-                    borderRadius: 25,
-                  }}
-                />
-                <CardTextStoreName>{item.storeName}</CardTextStoreName>
-              </CardTitleContainer>
-
-              <CardTextOfferTitle>
-                {item.quantityAvaible}x Combo(s) {MapTaste(item.taste)}(s)
-              </CardTextOfferTitle>
-
-              <CardTextPickUpDate>
-                Retirada até {format(parseISO(item.expirationDate), 'dd/MM')}
-              </CardTextPickUpDate>
-
-              <CardReviewContainer>
-                <ReviewRateText>{item.storeAverageRating}</ReviewRateText>
-              </CardReviewContainer>
-              <CardReviewStarContainer>
-                <Icon name='star' size={16} color='gold' />
-              </CardReviewStarContainer>
-
-              <CardPriceContainer>
-                <CardTextGrossUnitPrice>
-                  R${item.grossUnitPrice}
-                </CardTextGrossUnitPrice>
-                <CardTextNetUnitPrice>
-                  R${item.netUnitPrice}
-                </CardTextNetUnitPrice>
-              </CardPriceContainer>
-            </CardContainer>
-          </TouchableOpacity>
-        )}
+        renderItem={renderOfferItens(handleCreateOrderModal)}
         keyExtractor={(item) => item.offerId.toString()}
       />
 
@@ -137,6 +95,52 @@ export default function OffersCatalogScreen({ navigation, route }) {
         </Modal>
       )}
     </Container>
+  );
+}
+
+function renderOfferItens(handleCreateOrderModal: (item: any) => void) {
+  return ({ item }) => (
+    <TouchableOpacity onPress={() => handleCreateOrderModal(item)}>
+      <CardContainer>
+        <CardTitleContainer>
+          <Image
+            source={{
+              uri: `data:image/png;base64,${item.storeLogoImage}`,
+            }}
+            style={{
+              marginLeft: 5,
+              marginTop: 5,
+              width: 50,
+              height: 50,
+              borderRadius: 25,
+            }}
+          />
+          <CardTextStoreName>{item.storeName}</CardTextStoreName>
+        </CardTitleContainer>
+
+        <CardTextOfferTitle>
+          {item.quantityAvaible}x Combo(s) {MapTaste(item.taste)}(s)
+        </CardTextOfferTitle>
+
+        <CardTextPickUpDate>
+          Retirada até {format(parseISO(item.expirationDate), 'dd/MM')}
+        </CardTextPickUpDate>
+
+        <CardReviewContainer>
+          <ReviewRateText>{item.storeAverageRating}</ReviewRateText>
+        </CardReviewContainer>
+        <CardReviewStarContainer>
+          <Icon name='star' size={16} color='gold' />
+        </CardReviewStarContainer>
+
+        <CardPriceContainer>
+          <CardTextGrossUnitPrice>
+            R${item.grossUnitPrice}
+          </CardTextGrossUnitPrice>
+          <CardTextNetUnitPrice>R${item.netUnitPrice}</CardTextNetUnitPrice>
+        </CardPriceContainer>
+      </CardContainer>
+    </TouchableOpacity>
   );
 }
 

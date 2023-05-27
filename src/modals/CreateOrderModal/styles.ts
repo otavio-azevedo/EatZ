@@ -2,11 +2,12 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   background-color: #eaf2f4;
-  margin-top: 25%;
+  margin-top: 15%;
   margin-left: 2%;
   margin-right: 2%;
-  height: 70%;
+  height: 75%;
   width: 96%;
+  border-radius: 20px;
 `;
 
 export const Divider = styled.View`
@@ -17,11 +18,14 @@ export const Divider = styled.View`
 `;
 
 export const ContainerHeader = styled.View`
-  flex-direction: row;
   align-items: center;
   margin-bottom: 3%;
   text-align: center;
   justify-content: center;
+`;
+
+export const BackHeaderModal = styled.TouchableOpacity`
+  margin-right: 10%;
 `;
 
 export const ContainerHeaderText = styled.Text`

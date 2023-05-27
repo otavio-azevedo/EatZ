@@ -5,6 +5,7 @@ import {
   Input,
   ContainerList,
   ItemList,
+  BackHeaderModal,
 } from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { searchCity } from '../../services/location';
@@ -40,6 +41,9 @@ export function HomeSearchCityModal({ handleClose, setSelectedCity }) {
 
   return (
     <Container>
+      <BackHeaderModal onPress={() => handleClose()}>
+        <Icon name='angle-down' size={30} color='#2E8494' />
+      </BackHeaderModal>
       <ContainerInput>
         <Input
           placeholder='Digite a cidade desejada...'

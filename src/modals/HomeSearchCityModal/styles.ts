@@ -10,6 +10,11 @@ export const Container = styled.View`
   border-radius: 20px;
 `;
 
+export const BackHeaderModal = styled.TouchableOpacity`
+  margin-left: 5%;
+  margin-top: 5%;
+`;
+
 export const ContainerInput = styled.View`
   flex-direction: row;
   align-items: center;
@@ -17,9 +22,9 @@ export const ContainerInput = styled.View`
   border-radius: 20px;
   padding: 10px;
   height: 60px;
-  width: 96%;
-  margin-left: 2%;
-  margin-top: 2%;
+  width: 92%;
+  margin-left: 4%;
+  margin-top: 1%;
   text-color: #2e8494;
 `;
 export const Input = styled.TextInput`

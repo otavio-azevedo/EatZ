@@ -85,8 +85,9 @@ export function CreateOrderModal({ navigation, handleClose, offer }) {
                 uri: `data:image/png;base64,${offer.storeLogoImage}`,
               }}
               style={{
-                width: '100%',
-                height: 150,
+                width: 200,
+                height: 200,
+                borderRadius: 30,
               }}
             />
           </ContainerHeader>
@@ -107,6 +108,8 @@ export function CreateOrderModal({ navigation, handleClose, offer }) {
           <OfferGeneralInfoText>
             {offer.quantityAvaible}x Combo(s) {MapTaste(offer.taste)}(s)
           </OfferGeneralInfoText>
+
+          <OfferGeneralInfoText>{offer.description}</OfferGeneralInfoText>
 
           <OfferGeneralInfoText>
             Retirada até {format(parseISO(offer.expirationDate), 'dd/MM')}

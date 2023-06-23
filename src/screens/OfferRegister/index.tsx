@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ActivityIndicator, FlatList, Modal } from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  Modal,
+  View,
+  StyleSheet,
+  Text,
+} from 'react-native';
 import {
   OfferContainer,
   OfferTitle,
@@ -151,6 +158,7 @@ export default function OfferRegisterScreen({ navigation, route }) {
             </OfferContainer>
           )}
           keyExtractor={(item) => item.id.toString()}
+          ListEmptyComponent={ListEmptyComponent}
         />
       </ListOffersContainer>
     </Container>
@@ -167,3 +175,25 @@ function MapTaste(taste: string) {
       return 'Salgado';
   }
 }
+
+const ListEmptyComponent = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Nenhuma oferta cadastrada</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '50%',
+  },
+  text: {
+    color: '#BEBEBE',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});

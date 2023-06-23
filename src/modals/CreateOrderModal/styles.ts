@@ -2,10 +2,10 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   background-color: #eaf2f4;
-  margin-top: 15%;
+  margin-top: 10%;
   margin-left: 2%;
   margin-right: 2%;
-  height: 75%;
+  height: 85%;
   width: 96%;
   border-radius: 20px;
 `;
@@ -65,6 +65,7 @@ export const PickerContainer = styled.View`
 export const CardTitleContainer = styled.View`
   flex-direction: row;
   margin-bottom: 3%;
+  margin-left: 2%;
 `;
 
 export const CardTitleTextStoreName = styled.Text`

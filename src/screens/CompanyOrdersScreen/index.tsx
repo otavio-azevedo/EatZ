@@ -93,6 +93,7 @@ export default function CompanyOrdersScreen() {
         data={orders}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderOrderItem}
+        ListEmptyComponent={ListEmptyComponent}
       />
     );
   };
@@ -120,7 +121,26 @@ export default function CompanyOrdersScreen() {
   );
 }
 
+const ListEmptyComponent = () => {
+  return (
+    <View style={styles.emptyListContainer}>
+      <Text style={styles.emptyListText}>Nenhuma pedido cadastrado</Text>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
+  emptyListContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '50%',
+  },
+  emptyListText: {
+    color: '#BEBEBE',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   orderItem: {
     flexDirection: 'row',
     marginBottom: 5,

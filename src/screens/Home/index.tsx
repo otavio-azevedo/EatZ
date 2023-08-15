@@ -75,36 +75,12 @@ export default function HomeScreen({ navigation }) {
     <View style={styles.container}>
       <MapView
         style={styles.map}
-        //initialRegion={initialRegion}
-        // region={{
-        //   latitude: location?.latitude,
-        //   longitude: location?.longitude,
-        //   latitudeDelta: 0.005,
-        //   longitudeDelta: 0.005,
-        // }}
-        initialCamera={{
-          center: {
-            latitude: initialRegion?.latitude,
-            longitude: initialRegion?.longitude,
-          },
-          pitch: 80,
-          heading: 0,
-          // Only on iOS MapKit, in meters. The property is ignored by Google Maps.
-          altitude: 1,
-          // Only when using Google Maps.
-          zoom: 15,
-        }}
-        camera={{
-          center: {
-            latitude: location?.latitude,
-            longitude: location?.longitude,
-          },
-          pitch: 80,
-          heading: 0,
-          // Only on iOS MapKit, in meters. The property is ignored by Google Maps.
-          altitude: 1,
-          // Only when using Google Maps.
-          zoom: 15,
+        initialRegion={initialRegion}
+        region={{
+          latitude: location?.latitude,
+          longitude: location?.longitude,
+          latitudeDelta: 0.005,
+          longitudeDelta: 0.005,
         }}
       >
         {location && (

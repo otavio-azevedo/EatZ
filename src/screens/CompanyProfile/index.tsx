@@ -22,8 +22,11 @@ import UnderConstruction from '../../components/UnderConstruction';
 
 export default function CompanyProfileScreen({
   navigation,
-  hasStoreRegistered = true,
+  route
 }) {
+
+ const { hasStoreRegistered } = route.params;
+
   if (hasStoreRegistered) {
     return <UnderConstruction />;
   }

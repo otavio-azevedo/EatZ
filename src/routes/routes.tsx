@@ -63,7 +63,7 @@ function ConsumerAppTabRoutes() {
           },
         })}
       >
-        <Tab.Screen
+        {/* <Tab.Screen
           name='Home'
           component={HomeScreen}
           options={{
@@ -77,7 +77,7 @@ function ConsumerAppTabRoutes() {
               />
             ),
           }}
-        />
+        /> */}
         <Tab.Screen
           name='OffersCatalog'
           component={OffersCatalogScreen}

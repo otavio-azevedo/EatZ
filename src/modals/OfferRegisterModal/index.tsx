@@ -16,6 +16,7 @@ import { KeyboardAvoidingView, ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { TastesEnum } from '../../types/tastes';
 import { createOffer } from '../../services/offers';
+import { getApiErrors } from '../../services/@axios/getApiErrors';
 
 export function OfferRegisterModal({ handleClose, storeId, setNewOfferId }) {
   const [description, setDescription] = useState('');
@@ -36,9 +37,17 @@ export function OfferRegisterModal({ handleClose, storeId, setNewOfferId }) {
   };
 
   const registerOfferCallback = useCallback(async () => {
-    const offerId = await createOffer(offer);
-    setNewOfferId(offerId);
-    handleClose();
+    try {
+      const offerId = await createOffer(offer);
+      setNewOfferId(offerId);
+      handleClose();
+      console.log('###45');
+    } catch (error) {
+      console.log('###46');
+      console.log(error.response);
+      const content = getApiErrors(error);
+      console.log(content);
+    }
   }, [offer]);
 
   const handleMoneyValueChange = (setValue) => (value) => {

@@ -17,20 +17,13 @@ import * as FileSystem from 'expo-file-system';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Picker } from '@react-native-picker/picker';
 import { getCitiesByState, getStatesByCountry } from '../../services/location';
-import { createStore } from '../../services/stores';
+import { createStore, getStoreByCurrentUser } from '../../services/stores';
 import UnderConstruction from '../../components/UnderConstruction';
 
 export default function CompanyProfileScreen({
-  navigation,
-  route
+  navigation
 }) {
-
- const { hasStoreRegistered } = route.params;
-
-  if (hasStoreRegistered) {
-    return <UnderConstruction />;
-  }
-
+  const [hasStoreRegistered, setHasStoreRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const [name, setName] = useState('');
@@ -119,9 +112,31 @@ export default function CompanyProfileScreen({
     [selectedState],
   );
 
+    useEffect(()=>{
+      const getStoreByCurrentUserAsync = async () => {
+        try {
+          var response = await getStoreByCurrentUser();
+          
+          if (response)
+            setHasStoreRegistered(true);
+          else
+            setHasStoreRegistered(false);
+        } catch (error) {
+          setHasStoreRegistered(false);
+        }
+      };
+    
+      getStoreByCurrentUserAsync();
+      console.log(hasStoreRegistered);
+    },[hasStoreRegistered])
+
   useEffect(() => {
     getStatesByCountryCallback();
   }, []);
+
+  if (hasStoreRegistered) {
+    return <UnderConstruction />;
+  }
 
   return (
     <KeyboardAvoidingView

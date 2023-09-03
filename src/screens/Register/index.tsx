@@ -10,6 +10,7 @@ import {
   TextRegisterButton,
   LoginImageBackground,
 } from './styles';
+import { getApiErrors } from '../../services/@axios/getApiErrors';
 
 export default function RegisterScreen({ navigation, route }) {
   const { role } = route.params;
@@ -23,25 +24,32 @@ export default function RegisterScreen({ navigation, route }) {
 
   const registerAsync = useCallback(async () => {
     setIsLoading(true);
-    const registerResult = await register({
-      name,
-      email,
-      password,
-      confirmPassword,
-      role,
-    });
+    try {
+          const registerResult = await register({
+            name,
+            email,
+            password,
+            confirmPassword,
+            role,
+          });
+          
+          const signInResult = await handleTokenResponse(registerResult);
+          setIsLoading(false);
+      
+          if (registerResult && signInResult) {
+              navigation.navigate(
+                  'Register',
+                  role === RoleEnum.Company ? 'StoreRegister' : 'OffersCatalog',
+                );
+              } 
+              else
+                  Alert.alert('Falha ao criar conta, verifique os dados informados');
 
-    const signInResult = await handleTokenResponse(registerResult);
-    setIsLoading(false);
-
-    if (registerResult && signInResult) {
-      navigation.navigate(
-        'Register',
-        role === RoleEnum.Company ? 'StoreRegister' : 'Home',
-      );
-    } else {
-      Alert.alert('Falha ao criar conta, verifique os dados informados');
-    }
+        } catch (error) {
+          setIsLoading(false);
+          const content = getApiErrors(error);
+          Alert.alert(content);            
+        }
   }, [name, email, password, confirmPassword, register, handleTokenResponse]);
 
   return (

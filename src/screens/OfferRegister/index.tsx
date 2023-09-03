@@ -44,7 +44,6 @@ export default function OfferRegisterScreen({ navigation, route }) {
       return;
     }
 
-console.log("storeId: " + storeId);
     if (storeId === '') {
       const getStoreByCurrentUserAsync = async () => {
         try {
@@ -53,7 +52,7 @@ console.log("storeId: " + storeId);
         } catch (error) {
           if (error.response.data[0].message === 'Loja não encontrada.')
           console.log(error.response.data[0].message);
-            navigation.navigate('CompanyProfile', { hasStoreRegistered: false});
+            navigation.navigate('CompanyProfile');
         }
       };
 
